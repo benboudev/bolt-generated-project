@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Web Scraper</title>
+</head>
+<body>
+  <input type="text" id="urlInput" placeholder="Enter URL to scrape">
+  <button onclick="scrape()">Scrape</button>
+  <pre id="result"></pre>
+
+  <script>
+    async function scrape() {
+      const url = document.getElementById('urlInput').value;
+      try {
+        const response = await fetch('/api/scraper', {
+          method: 'POST',
+          body: JSON.stringify({ url })
+        });
+        const data = await response.json();
+        document.getElementById('result').textContent = JSON.stringify(data, null, 2);
+      } catch (error) {
+        document.getElementById('result').textContent = error.message;
+      }
+    }
+  </script>
+</body>
+</html>
